@@ -1,6 +1,6 @@
 {
     "name": "odroid Temp Monitor",
-    "version": "0.1",
+    "version": "0.1.1",
     "slug": "odroidtempmon",
     "description": "This monitors the temperature of the ODroid",
     "arch": ["armhf", "armv7", "aarch64"],
@@ -11,7 +11,7 @@
     "boot": "auto",
     "auth_api": false,
     "options": {
-      "CorF": "F"
+      "CorF": "C"
     },
     "schema": {
       "CorF": "str"
