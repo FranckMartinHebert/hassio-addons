@@ -1,0 +1,58 @@
+
+ARG BUILD_FROM
+ARG BUILD_VERSION
+ARG BUILD_UPSTREAM="latest"
+FROM ${BUILD_FROM}${BUILD_UPSTREAM}
+ENV BASHIO_VERSION=1.29.1
+
+ARG ISO_LANGUAGE=en
+ARG ISO_COUNTRY=US
+
+SHELL ["/bin/ash", "-o", "pipefail", "-c"]
+
+WORKDIR /usr/src
+
+RUN sh
+RUN chmod 1777 /tmp
+RUN chmod -R 1777 /var/tmp
+RUN rm -rf /var/lib/apt/lists/*
+
+# update sources list
+RUN apk update && apk upgrade
+RUN apk add ca-certificates wget && update-ca-certificates
+
+# install basic apps, one per line for better caching
+RUN apk add  git
+RUN apk add  nano
+RUN apk add  tmux
+RUN apk add  sudo
+RUN apk add  curl
+RUN apk add  openssh
+RUN apk add  bash
+RUN apk add  build-base
+RUN apk add  autoconf
+
+# install glibc using origin sources
+RUN export GLIBC_VERSION=2.26-r0 && \
+    apk add --update ca-certificates bash su-exec gzip curl wget tzdata tini openssl && \
+    wget -q --directory-prefix=/tmp https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk && \
+    wget -q --directory-prefix=/tmp https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-bin-${GLIBC_VERSION}.apk && \
+    wget -q --directory-prefix=/tmp https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-i18n-${GLIBC_VERSION}.apk && \
+    apk add --allow-untrusted /tmp/glibc-${GLIBC_VERSION}.apk && \
+    apk add --allow-untrusted /tmp/glibc-bin-${GLIBC_VERSION}.apk && \
+    apk add --allow-untrusted /tmp/glibc-i18n-${GLIBC_VERSION}.apk && \
+    /usr/glibc-compat/bin/localedef -i ${ISO_LANGUAGE}_${ISO_COUNTRY} -f UTF-8 ${ISO_LANGUAGE}_${ISO_COUNTRY}.UTF-8 && \
+    cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
+    echo "${TIMEZONE}" >/etc/timezone && \
+    echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf
+
+
+
+RUN git clone https://github.com/hardkernel/wiringPi.git /usr/src/wiringPi \
+    && cd /usr/src/jemalloc \
+    && ./autogen.sh \
+    && make \
+    && make install 
+
+WORKDIR /
+ENTRYPOINT ["/init"]
