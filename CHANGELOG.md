@@ -13,6 +13,12 @@ and this project join [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 ### Security
 -->
 
+## [0.3.0] 2023/06/12
+
+### Added
+
+- zigbee2mqtt for odroid
+
 ## [0.2.1] 2023/06/12
 
 ### Fixed
