@@ -13,6 +13,13 @@ and this project join [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 ### Security
 -->
 
+## [0.3] 2023/06/14
+
+### Added
+
+- Add cpu freq
+- Add gpu temp
+
 ## [0.2.2] 2023/06/12
 
 ### Fixed
