@@ -4,7 +4,7 @@ until false; do
   read cpuRawTemp</sys/class/thermal/thermal_zone0/temp 
   #read cpuRawTemp1</sys/class/thermal/thermal_zone1/temp 
   #cpuTemp=$(( $cpuRawTemp / 1000 ))
-  cpuRawTemp=`awk -v n=$cpuRawTemp 'BEGIN {printf "%.2f\n", (n/1000)}'`
+  cpuTemp=`awk -v n=$cpuRawTemp 'BEGIN {printf "%.2f\n", (n/1000)}'`
   #cpuTemp1=$(( $cpuRawTemp1 / 1000 ))
   unit="C"
   if [ $CorF == "F" ]; then
