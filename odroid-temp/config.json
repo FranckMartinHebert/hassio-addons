@@ -1,6 +1,6 @@
 {
     "name": "odroid Temp Monitor",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "slug": "odroidtempmon",
     "description": "This monitors the temperature of the ODroid",
     "arch": ["armhf", "armv7", "aarch64"],
