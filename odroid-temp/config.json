@@ -1,8 +1,8 @@
 {
-    "name": "odroid Temp Monitor",
+    "name": "odroid Monitor",
     "version": "0.3",
-    "slug": "odroidtempmon",
-    "description": "This monitors the temperature of the ODroid",
+    "slug": "odroidmonitor",
+    "description": "Monitor of the odroid",
     "arch": ["armhf", "armv7", "aarch64"],
     "hassio_api": false,
     "host_network": false,
